@@ -1,0 +1,161 @@
+<?php
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CatsStore - Oyunlar</title>
+<style>
+  body {
+    background-color: #1a1a2e;  /* Daha koyu gece mavisi */
+    color: #e0e0e0; /* Açık gri, göz yormayan */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+  }
+  .header {
+    background: linear-gradient(90deg, #4e54c8, #8f94fb); /* Mor-mavi degrade */
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  .header img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.7));
+  }
+  .header .title {
+    font-weight: 700;
+    font-size: 28px;
+    color: #f0f0f5;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: #c5c7e8;
+    letter-spacing: 0.05em;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+  h2 {
+    border-bottom: 3px solid #7f8cff; /* Daha kalın, parlak mavi çizgi */
+    padding-bottom: 7px;
+    margin-bottom: 20px;
+    color: #d6dbf5;
+    text-shadow: 0 0 4px #7f8cff;
+  }
+  .search-box {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background-color: #2e2f62;
+    color: #d1d4ff;
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .search-box:focus {
+    outline: none;
+    background-color: #45479e;
+    box-shadow: 0 0 8px #7f8cff;
+    color: #fff;
+  }
+  .games-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .games-list li {
+    background: linear-gradient(135deg, #5760f9, #9099ff);
+    margin-bottom: 10px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #eef1ff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .games-list li:hover {
+    background: linear-gradient(135deg, #9099ff, #5760f9);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  }
+  .footer {
+    text-align: center;
+    color: #9ea4ff;
+    margin-top: 50px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+  <header class="header">
+    <img src="https://code.latth.com.tr/catsstore/logo.png" alt="CatsStore Logo" />
+    <div>
+      <div class="title">CatsStore</div>
+      <div class="subtitle">170 Oyun</div>
+    </div>
+  </header>
+  <main class="container">
+    <h2>Mevcut Oyunlar</h2>
+    <input type="text" id="search" class="search-box" placeholder="Oyun ara..." />
+    <ul id="gamesList" class="games-list"></ul>
+    <div class="footer" id="totalCount"></div>
+  </main>
+
+<script>
+  // Örnek oyun listesi (gerçek site 170 oyun içeriyor)
+  const games = [
+    "The Walking Dead: The Telltale Definitive Series",
+    "60 Seconds! Reatomized",
+    "A Story About My Uncle",
+    "Age of History 3",
+    "Age of History II",
+    "Age of Wonders III",
+    "American Truck Simulator",
+    "Among Us",
+    "ARK: Survival Evolved",
+    "ARK: Survival Of The Fittest",
+    // ... diğer oyunlar burada listelenebilir
+  ];
+
+  const gamesList = document.getElementById("gamesList");
+  const searchInput = document.getElementById("search");
+  const totalCount = document.getElementById("totalCount");
+
+  // Oyun listesini render etme fonksiyonu
+  function renderGames(filter = "") {
+    gamesList.innerHTML = "";
+    const filteredGames = games.filter(game =>
+      game.toLowerCase().includes(filter.toLowerCase())
+    );
+    filteredGames.forEach(game => {
+      const li = document.createElement("li");
+      li.textContent = game;
+      gamesList.appendChild(li);
+    });
+    totalCount.textContent = `Toplam ${filteredGames.length} oyun`;
+  }
+
+  // Arama input event
+  searchInput.addEventListener("input", (e) => {
+    renderGames(e.target.value);
+  });
+
+  // Sayfa ilk yüklendiğinde listeyi göster
+  renderGames();
+</script>
+</body>
+</html>
+
+?>
